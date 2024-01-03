@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class OrderService implements GeneralService<Order> {
     Connection connection = ConnectionCreator.getConnection();
-    OrderDetail orderDetail=new OrderDetail();
+    OrderDetail orderDetail = new OrderDetail();
     AccService accService = new AccService();
     Acc acc = new Acc();
 

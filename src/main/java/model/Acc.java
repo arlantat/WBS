@@ -6,18 +6,18 @@ import java.security.NoSuchAlgorithmException;
 
 public class Acc implements Serializable {
     private int id;
-    private String loginName;
-    private String hashedPassword;
+    private String username;
+    private String password;
 
-    public Acc(int id, String loginName, String hashedPassword) {
+    public Acc(int id, String username, String password) {
         this.id = id;
-        this.loginName = loginName;
-        this.hashedPassword = hashedPassword;
+        this.username = username;
+        this.password = password;
     }
 
-    public Acc(String loginName, String hashedPassword) {
-        this.loginName = loginName;
-        this.hashedPassword = hashedPassword;
+    public Acc(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public Acc() {
@@ -31,27 +31,23 @@ public class Acc implements Serializable {
         this.id = id;
     }
 
-    public String getLoginName() {
-        return loginName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public String getPassword() {
+        return password;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
-
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public void setPassword(String Password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
         return "Acc{" +
-                "loginName='" + loginName + '\'' +
-                ", hashedPassword='" + hashedPassword + '\'' +
+                "loginName='" + username + '\'' +
+                ", hashedPassword='" + password + '\'' +
                 '}';
     }
 }

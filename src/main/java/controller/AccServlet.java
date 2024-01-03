@@ -26,15 +26,15 @@ public class AccServlet extends HttpServlet {
             case "create":
                 try {
                     create(request, response);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
                 }
                 break;
             case "delete":
                 try {
                     delete(request, response);
-                } catch (SQLException throwAbles) {
-                    throwAbles.printStackTrace();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
                 }
                 break;
             case "edit":
@@ -57,11 +57,15 @@ public class AccServlet extends HttpServlet {
     }
 
 
-    private void create(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String name = request.getParameter("name");
+    private void create(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
-        accService.add(new Acc(0, name, password));
-        response.sendRedirect("/home");
+        if (accService.add(new Acc(username, password))) {
+            request.getRequestDispatcher("/home").forward(request, response);
+        } else {
+            request.setAttribute("msg", "Tồn tại tên đăng nhập");
+            request.getRequestDispatcher("auth/register.jsp").forward(request, response);
+        }
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -82,8 +86,15 @@ public class AccServlet extends HttpServlet {
             case "editForm":
                 editForm(request, response);
                 break;
-            default:
+            case "showList":
                 showList(request, response);
+                break;
+            default:
+                try {
+                    verify(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
         }
     }
 
@@ -100,9 +111,22 @@ public class AccServlet extends HttpServlet {
         request.getRequestDispatcher("acc/create.jsp").forward(request, response);
     }
 
+    private void verify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        System.out.println(password);
+        Acc acc = new Acc(username, password);
+        if (accService.verify(acc)) {
+            request.getRequestDispatcher("/home").forward(request, response);
+        } else {
+            request.setAttribute("msg", "Sai, mời đăng nhập lại");
+            request.getRequestDispatcher("auth/login.jsp").forward(request, response);
+        }
+    }
+
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Acc> accs = accService.findAll();
-        request.setAttribute("ds", accs);
-        request.getRequestDispatcher("acc/list.jsp").forward(request, response);
+        request.setAttribute("accs", accs);
+        request.getRequestDispatcher("admin/accounts.jsp").forward(request, response);
     }
 }
