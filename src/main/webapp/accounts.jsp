@@ -24,7 +24,7 @@
     </tr>
     </thead>
     <tbody>
-        <c:forEach items="${accounts}" var="account">
+        <c:forEach items="${accs}" var="account">
             <tr>
                 <th scope="row">${account.loginName}</th>
                 <td>${account.hashedPassword}</td>
