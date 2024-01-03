@@ -69,16 +69,12 @@ public class AccServlet extends HttpServlet {
         accService.delete(id);
         response.sendRedirect("/home");
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String act = request.getParameter("act");
         if (act == null) {
             act = "";
         }
         switch (act) {
-            case "create":
-                showCreateForm(request, response);
-                break;
             case "editForm":
                 editForm(request, response);
                 break;

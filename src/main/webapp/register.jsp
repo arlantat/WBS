@@ -88,7 +88,7 @@
 <div class="content">
     <div id="register" class="mt-5">
         <h2>Register</h2>
-        <form action="/authenticate" method="post">
+        <form action="/accounts" method="post">
             <div class="form-group">
                 <label for="registerUsername">Username</label>
                 <input type="text" class="form-control" id="registerUsername" name="registerUsername" required>

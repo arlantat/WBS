@@ -87,7 +87,7 @@
 <div class="container">
     <div id="login" class="mt-5">
         <h2>Login</h2>
-        <form action="/authenticate" method="get">
+        <form action="/accounts" method="get">
             <div class="form-group">
                 <label for="loginUsername">Username</label>
                 <input type="text" class="form-control" id="loginUsername" name="loginUsername">
@@ -103,7 +103,5 @@
     </div>
 </div>
 <p class="msg">${msg}</p>
-
-
 </body>
 </html>
