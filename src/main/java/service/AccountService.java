@@ -14,7 +14,7 @@ public class AccountService {
         Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/world?useSSL=false", "root", "admin");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tmdt?useSSL=false", "root", "123456");
         } catch (SQLException | ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
