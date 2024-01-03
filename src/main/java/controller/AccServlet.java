@@ -50,6 +50,7 @@ public class AccServlet extends HttpServlet {
     }
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         accService.update(new Acc(username, password));

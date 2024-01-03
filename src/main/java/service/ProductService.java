@@ -46,6 +46,14 @@ public class ProductService implements GeneralService<Product> {
 
     @Override
     public boolean update(Product product) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET name=?, price=? WHERE id=?");
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

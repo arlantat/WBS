@@ -49,6 +49,14 @@ public class ShopService implements GeneralService<Shop> {
 
     @Override
     public boolean update(Shop shop) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET idaccount=?, name=? WHERE id=?");
+            preparedStatement.setInt(1, shop.getAzz().getId());
+            preparedStatement.setString(2, shop.getName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

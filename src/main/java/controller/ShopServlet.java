@@ -89,12 +89,12 @@ public class ShopServlet extends HttpServlet {
     }
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("shopzz/create.jsp").forward(request, response);
+        request.getRequestDispatcher("shop/create.jsp").forward(request, response);
     }
 
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Shop> shopList = shopService.findAll();
-        request.setAttribute("ds", shopList);
-        request.getRequestDispatcher("shopzz/list.jsp").forward(request, response);
+        request.setAttribute("danhsach", shopList);
+        request.getRequestDispatcher("shop/shopHome.jsp").forward(request, response);
     }
 }

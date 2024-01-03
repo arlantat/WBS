@@ -11,6 +11,13 @@
     <title>Title</title>
 </head>
 <body>
+<form method="post">
 
+    <div class="form-group">
+        <h4></h4>
+        <input type="text" class="form-control" name="name">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 </body>
 </html>
