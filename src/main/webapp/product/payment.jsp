@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -29,6 +30,11 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="col-md-6">
+            <c:forEach items="${cart}" var="cartItem">
+                <p>${cartItem.id},${cartItem.name},${cartItem.price},${cartItem.quantity},</p>
+            </c:forEach>
         </div>
     </div>
 </div>

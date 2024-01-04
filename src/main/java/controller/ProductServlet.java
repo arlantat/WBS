@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import service.ProductService;
+import service.ShopService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "ProductServlet", urlPatterns = "/products")
 public class ProductServlet extends HttpServlet {
     ProductService productService  = new ProductService();
+    ShopService shopService = new ShopService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -25,6 +28,10 @@ public class ProductServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "pay":
+                payment(request, response);
+                System.out.println("ddddd");
+                break;
             case "create":
                 try {
                     create(request, response);
@@ -88,6 +95,33 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
+    private void payment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int index = 1;
+        String nameCur;
+        double priceCur;
+        int idCur, quantityCur;
+        List<CartItem> cart = new ArrayList<>();
+        while (!request.getParameter("id" + index).isEmpty()) {
+            quantityCur = Integer.parseInt(request.getParameter("quantity" + index));
+            if (quantityCur == 0) {
+                index++;
+                continue;
+            }
+            idCur = Integer.parseInt(request.getParameter("id" + index));
+            nameCur = request.getParameter("name" + index);
+            priceCur = Double.parseDouble(request.getParameter("price" + index));
+            CartItem cartItem = new CartItem(idCur, nameCur, priceCur, quantityCur);
+            cart.add(cartItem);
+            System.out.println(cartItem.getId());
+            System.out.println(cartItem.getName());
+            System.out.println(cartItem.getPrice());
+            System.out.println(cartItem.getQuantity());
+            index++;
+        }
+        request.setAttribute("cart", cart);
+        request.getRequestDispatcher("product/payment.jsp").forward(request, response);
+    }
+
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("blog/edit.jsp");
@@ -102,8 +136,12 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> productList = productService.findAll();
-        request.setAttribute("ds", productList);
-        request.getRequestDispatcher("productss/list.jsp").forward(request, response);
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
+        String nameShop = shopService.findById(idShop).getName();
+        List<Product> products = productService.findAllByShop(idShop);
+        request.setAttribute("nameShop", nameShop);
+        request.setAttribute("idShop", idShop);
+        request.setAttribute("products", products);
+        request.getRequestDispatcher("product/list.jsp").forward(request, response);
     }
 }
