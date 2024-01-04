@@ -36,7 +36,7 @@ public class ProductService implements GeneralService<Product> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "select p.id, p.name, p.price, p.imageurl, p.description " +
-                    "from product p join shopproduct sp on p.id = sp.idproduct where sp.idshop = ?");
+                            "from product p join shopproduct sp on p.id = sp.idproduct where sp.idshop = ?");
             preparedStatement.setInt(1, idShop);
             System.out.println(preparedStatement); //in ra câu truy vấn.
             ResultSet rs = preparedStatement.executeQuery();
