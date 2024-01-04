@@ -4,6 +4,8 @@ public class Product {
     private int id;
     private String name;
     private double price;
+    private String imageurl;
+    private String description;
 
     public Product(int id, String name, double price) {
         this.id = id;
@@ -17,6 +19,14 @@ public class Product {
     }
 
     public Product() {
+    }
+
+    public Product(int id, String name, double price, String imageurl, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imageurl = imageurl;
+        this.description = description;
     }
 
     public int getId() {
@@ -43,12 +53,30 @@ public class Product {
         this.price = price;
     }
 
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", price=" + price +
+                ", price='" + price + '\'' +
+                ", imageurl='" + imageurl + '\'' +
+                ", description=" + description +
                 '}';
     }
 }
