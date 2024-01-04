@@ -30,7 +30,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
-        <p><a href="register.jsp ">Register</a></p>
+        <p><a href="register.jsp">Register</a></p>
         <p id="msg">${msg}</p>
     </div>
 </div>

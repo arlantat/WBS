@@ -30,7 +30,6 @@ public class ProductServlet extends HttpServlet {
         switch (action) {
             case "pay":
                 payment(request, response);
-                System.out.println("ddddd");
                 break;
             case "create":
                 try {
@@ -101,7 +100,7 @@ public class ProductServlet extends HttpServlet {
         double priceCur;
         int idCur, quantityCur;
         List<CartItem> cart = new ArrayList<>();
-        while (!request.getParameter("id" + index).isEmpty()) {
+        while (request.getParameter("id" + index) != null) {
             quantityCur = Integer.parseInt(request.getParameter("quantity" + index));
             if (quantityCur == 0) {
                 index++;
@@ -112,14 +111,13 @@ public class ProductServlet extends HttpServlet {
             priceCur = Double.parseDouble(request.getParameter("price" + index));
             CartItem cartItem = new CartItem(idCur, nameCur, priceCur, quantityCur);
             cart.add(cartItem);
-            System.out.println(cartItem.getId());
-            System.out.println(cartItem.getName());
-            System.out.println(cartItem.getPrice());
-            System.out.println(cartItem.getQuantity());
             index++;
         }
         request.setAttribute("cart", cart);
-        request.getRequestDispatcher("product/payment.jsp").forward(request, response);
+        request.setAttribute("idShop", request.getParameter("idShop"));
+        request.setAttribute("idAccount", request.getParameter("idAccount"));
+        request.setAttribute("nameShop", request.getParameter("nameShop"));
+        request.getRequestDispatcher("product/cart.jsp").forward(request, response);
     }
 
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -137,10 +135,12 @@ public class ProductServlet extends HttpServlet {
 
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idShop = Integer.parseInt(request.getParameter("idShop"));
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
         String nameShop = shopService.findById(idShop).getName();
         List<Product> products = productService.findAllByShop(idShop);
         request.setAttribute("nameShop", nameShop);
         request.setAttribute("idShop", idShop);
+        request.setAttribute("idAccount", idAccount);
         request.setAttribute("products", products);
         request.getRequestDispatcher("product/list.jsp").forward(request, response);
     }

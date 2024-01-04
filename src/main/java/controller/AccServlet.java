@@ -1,6 +1,7 @@
 package controller;
 
 import model.Acc;
+import model.CartItem;
 import service.AccService;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "AccServlet", urlPatterns = "/accounts")
@@ -117,7 +119,7 @@ public class AccServlet extends HttpServlet {
         System.out.println(password);
         Acc acc = new Acc(username, password);
         if (accService.verify(acc)) {
-            request.getRequestDispatcher("/home").forward(request, response);
+            request.getRequestDispatcher("/shop").forward(request, response);
         } else {
             request.setAttribute("msg", "Sai, mời đăng nhập lại");
             request.getRequestDispatcher("auth/login.jsp").forward(request, response);
