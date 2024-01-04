@@ -35,26 +35,19 @@ public class Acc implements Serializable {
         return username;
     }
 
-    public String setUsername() {
-        this.username = username;
-        return null;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public String setPassword(String password) {
+    public void setPassword(String Password) {
         this.password = password;
-        return password;
     }
 
     @Override
     public String toString() {
         return "Acc{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                "loginName='" + username + '\'' +
+                ", hashedPassword='" + password + '\'' +
                 '}';
     }
-
 }

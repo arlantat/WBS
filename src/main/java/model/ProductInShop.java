@@ -4,19 +4,19 @@ public class ProductInShop {
     private int id;
     private Product idProduct;
     private Shop idShop;
-    private int Stock;
+    private int stock;
 
     public ProductInShop(int id, Product idProduct, Shop idShop, int stock) {
         this.id = id;
         this.idProduct = idProduct;
         this.idShop = idShop;
-        Stock = stock;
+        this.stock = stock;
     }
 
     public ProductInShop(Product idProduct, Shop idShop, int stock) {
         this.idProduct = idProduct;
         this.idShop = idShop;
-        Stock = stock;
+        this.stock = stock;
     }
 
     public ProductInShop() {
@@ -47,11 +47,11 @@ public class ProductInShop {
     }
 
     public int getStock() {
-        return Stock;
+        return this.stock;
     }
 
     public void setStock(int stock) {
-        Stock = stock;
+        this.stock = stock;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ProductInShop {
                 "id=" + id +
                 ", idProduct=" + idProduct +
                 ", idShop=" + idShop +
-                ", Stock=" + Stock +
+                ", Stock=" + this.stock +
                 '}';
     }
 }

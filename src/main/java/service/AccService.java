@@ -17,9 +17,10 @@ public class AccService implements GeneralService<Acc> {
             System.out.println(preparedStatement); //in ra câu truy vấn.
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                accList.add(new Acc(username, password));
+                accList.add(new Acc(id, username, password));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -30,10 +31,11 @@ public class AccService implements GeneralService<Acc> {
     @Override
     public boolean add(Acc acc) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into account(username, password) values (?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into account (username, password) values (?,?)");
             preparedStatement.setString(1, acc.getUsername());
             preparedStatement.setString(2, acc.getPassword());
-            preparedStatement.executeUpdate();
+            System.out.println(preparedStatement);
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -43,12 +45,13 @@ public class AccService implements GeneralService<Acc> {
     @Override
     public boolean update(Acc acc) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET username=?, password=? WHERE id=?");
-            preparedStatement.setString(1, acc.getUsername());
-            preparedStatement.setString(2, acc.getPassword());
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE username = ?");
+            preparedStatement.setString(1, acc.getPassword());
+            preparedStatement.setString(2, acc.getUsername());
+            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
         return false;
     }
@@ -67,13 +70,26 @@ public class AccService implements GeneralService<Acc> {
             System.out.println(preparedStatement); //in ra câu truy vấn.
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String username = rs.getString("username");
+                String name = rs.getString("name");
                 String password = rs.getString("password"); // lấy ra classId từ bảng student trong db
-                acc = new Acc(username, password);
+                acc = new Acc(name, password);
             }
         } catch (SQLException e) {
         }
         return acc;
+    }
+
+    public boolean verify(Acc acc) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from account where username = ? and password = ?");
+            preparedStatement.setString(1, acc.getUsername());
+            preparedStatement.setString(2, acc.getPassword());
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+        }
+        return false;
     }
 
     @Override

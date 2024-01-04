@@ -6,11 +6,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         body {
-            background-color: bisque;
+            background-color: #3b5d50;
+            color: white;
         }
         .table {
-            --bs-table-bg: bisque;
-            border-color: black;
+            --bs-table-bg: #3b5d50;
+            border-color: white;
+            --bs-table-color-state: white
         }
     </style>
 </head>
@@ -19,6 +21,7 @@
 <table class="table">
     <thead>
     <tr>
+        <th scope="col">ID</th>
         <th scope="col">Username</th>
         <th scope="col">Password</th>
     </tr>
@@ -26,8 +29,9 @@
     <tbody>
         <c:forEach items="${accs}" var="account">
             <tr>
-                <th scope="row">${account.loginName}</th>
-                <td>${account.hashedPassword}</td>
+                <th scope="row">${account.id}</th>
+                <td>${account.username}</td>
+                <td>${account.password}</td>
             </tr>
         </c:forEach>
     </tbody>
