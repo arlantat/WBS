@@ -24,7 +24,6 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
 
@@ -75,7 +74,7 @@
                             <td><h2 class="h5 text-black">${pastOrder.id}</h2></td>
                             <td>${pastOrder.nameShop}</td>
                             <td>${pastOrder.timestamp}</td>
-                            <td>$${pastOrder.totalService}</td>
+                            <td>$${pastOrder.total}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${pastOrder.status == 1}">

@@ -70,7 +70,7 @@
                             <th class="product-name">Product</th>
                             <th class="product-price">Price</th>
                             <th class="product-quantity">Quantity</th>
-                            <th class="product-totalService">Total</th>
+                            <th class="product-total">Total</th>
                         </tr>
                         </thead>
                         <tbody>

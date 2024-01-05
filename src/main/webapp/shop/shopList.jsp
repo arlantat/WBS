@@ -26,7 +26,7 @@
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                <li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
+                <li><a class="nav-link" href="/accounts?act=profilePage&idAccount=${idAccount}"><img src="images/user.svg"></a></li>
                 <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
             </ul>
         </div>
@@ -54,13 +54,13 @@
 
 
 <div class="untree_co-section product-section before-footer-section">
-    <form action="/shop" method="post" class="text-center">
+    <form action="/products" method="post" class="text-center">
         <div class="container">
             <div class="row" style="display: flex">
                 <!-- Start Column 1 -->
-                <c:forEach items="${danhsach}" var="shop" varStatus="loop">
+                <c:forEach items="${shopList}" var="shop" varStatus="loop">
                     <div class="col-12 col-md-4 col-lg-3 mb-5">
-                        <a href="/shops">
+                        <a href="/products?idShop=${shop.id}&idAccount=${idAccount}">
                             <div class="product-item">
                                 <h3 class="product-title">${shop.name}</h3>
                                 <input type="hidden" name="id${loop.index + 1}" value="${shop.id}">

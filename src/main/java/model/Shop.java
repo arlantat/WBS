@@ -11,6 +11,11 @@ public class Shop {
         this.name = name;
     }
 
+    public Shop(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Shop( Acc azz, String name) {
         this.azz = azz;
         this.name = name;
