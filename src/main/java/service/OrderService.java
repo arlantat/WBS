@@ -36,6 +36,14 @@ public class OrderService implements GeneralService<Order> {
         return orderList;
     }
 
+    public List<Order> showAll() {
+        List<Order> orderList = new ArrayList<>();
+        for (Order order1 : orderList) {
+            System.out.println(order1);
+        }
+        return orderList;
+    }
+
     @Override
     public boolean add(Order order) throws SQLException {
         Timestamp timestamp = new Timestamp(new Date().getTime());
@@ -43,7 +51,7 @@ public class OrderService implements GeneralService<Order> {
             PreparedStatement preparedStatement = connection.prepareStatement("insert into orderaccshop (idaccount, idorder, idshop) VALUES (?, ?, ?)");
             preparedStatement.setInt(1, order.getIdAcc().getId());
             preparedStatement.setInt(2, order.getIdOrderDetail().getId());
-            preparedStatement.setInt(3, order.getIdShop().getId());
+            preparedStatement.setInt(3, order.getShopzz().getId());
             System.out.println(preparedStatement); //in ra câu truy vấn.
             int rowsAffected = preparedStatement.executeUpdate();
             boolean successful = rowsAffected > 0;
@@ -61,7 +69,7 @@ public class OrderService implements GeneralService<Order> {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE order SET idaccount=?, idod=?, idshop=?, status=? WHERE id=?");
             preparedStatement.setInt(1, order.getIdAcc().getId());
             preparedStatement.setInt(2, order.getIdOrderDetail().getId());
-            preparedStatement.setInt(3, order.getIdShop().getId());
+            preparedStatement.setInt(3, order.getShopzz().getId());
             preparedStatement.setBoolean(4, order.isStatus());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
