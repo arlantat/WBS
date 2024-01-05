@@ -54,13 +54,13 @@
 
 
 <div class="untree_co-section product-section before-footer-section">
-    <form action="/products" method="post" class="text-center">
+    <form action="/shop" method="post" class="text-center">
         <div class="container">
             <div class="row" style="display: flex">
                 <!-- Start Column 1 -->
                 <c:forEach items="${danhsach}" var="shop" varStatus="loop">
                     <div class="col-12 col-md-4 col-lg-3 mb-5">
-                        <a href="/products?idShop=1">
+                        <a href="/shops">
                             <div class="product-item">
                                 <h3 class="product-title">${shop.name}</h3>
                                 <input type="hidden" name="id${loop.index + 1}" value="${shop.id}">

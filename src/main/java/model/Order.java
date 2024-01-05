@@ -1,7 +1,6 @@
 package model;
 
 
-
 import java.sql.Timestamp;
 
 
@@ -12,8 +11,20 @@ public class Order extends OrderDetail {
     private Shop idShop;
     private Timestamp time;
     private boolean status;
+    private double total;
 
-    public Order(int id, Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time,boolean status) {
+    public Order(Product productzz, int quantity, double total, int id, Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time, boolean status, double total1) {
+        super(productzz, quantity, total);
+        this.id = id;
+        this.idAcc = idAcc;
+        this.idOrderDetail = idOrderDetail;
+        this.idShop = idShop;
+        this.time = time;
+        this.status = status;
+        this.total = total1;
+    }
+
+    public Order(int id, Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time, boolean status) {
         this.id = id;
         this.idAcc = idAcc;
         this.idOrderDetail = idOrderDetail;
@@ -22,7 +33,7 @@ public class Order extends OrderDetail {
         this.status = status;
     }
 
-    public Order(Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time,boolean status) {
+    public Order(Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time, boolean status) {
         this.idAcc = idAcc;
         this.idOrderDetail = idOrderDetail;
         this.idShop = idShop;
@@ -37,6 +48,11 @@ public class Order extends OrderDetail {
     }
 
     public Order(int idAcc, int idOrderDetail, java.sql.Timestamp timestamp, boolean status) {
+    }
+
+    public Order(Shop idShop, double total) {
+        this.idShop = idShop;
+        this.total = total;
     }
 
     public int getId() {

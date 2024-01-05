@@ -16,5 +16,5 @@ public interface GeneralService<T> {
 
     public T findById(int id);
 
-    public List<T> findByName(String name);
+    public T findByName(String name);
 }

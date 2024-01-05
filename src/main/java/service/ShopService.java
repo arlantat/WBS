@@ -86,7 +86,13 @@ public class ShopService implements GeneralService<Shop> {
     }
 
     @Override
-    public List<Shop> findByName(String name) {
+    public Shop findByName(String name) {
+        List<Shop> shopList = new ArrayList<>();
+        for (Shop shop : shopList) {
+            if (shop.getName().equals(name)) {
+                return shop;
+            }
+        }
         return null;
     }
 }

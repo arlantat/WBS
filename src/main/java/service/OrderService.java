@@ -109,7 +109,7 @@ public class OrderService implements GeneralService<Order> {
     }
 
     @Override
-    public List<Order> findByName(String name) {
+    public Order findByName(String name) {
         return null;
     }
 

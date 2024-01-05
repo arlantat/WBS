@@ -93,7 +93,7 @@ public class AccService implements GeneralService<Acc> {
     }
 
     @Override
-    public List<Acc> findByName(String name) {
+    public Acc findByName(String name) {
         return null;
     }
 }
