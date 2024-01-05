@@ -64,7 +64,8 @@ public class AccServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (accService.add(new Acc(username, password))) {
-            request.getRequestDispatcher("/home").forward(request, response);
+            request.setAttribute("msg", "Đăng ký thành công");
+            request.getRequestDispatcher("/auth/login.jsp").forward(request, response);
         } else {
             request.setAttribute("msg", "Tồn tại tên đăng nhập");
             request.getRequestDispatcher("auth/register.jsp").forward(request, response);
