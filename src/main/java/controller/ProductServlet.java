@@ -19,7 +19,7 @@ import java.util.List;
 
 @WebServlet(name = "ProductServlet", urlPatterns = "/products")
 public class ProductServlet extends HttpServlet {
-    ProductService productService  = new ProductService();
+    ProductService productService = new ProductService();
     ShopService shopService = new ShopService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,9 +45,9 @@ public class ProductServlet extends HttpServlet {
                     throwables.printStackTrace();
                 }
                 break;
-            case  "edit":
+            case "edit":
                 try {
-                    edit(request,response);
+                    edit(request, response);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -57,24 +57,32 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    private void edit(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+    private void edit(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
+        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        double price= Double.parseDouble(request.getParameter("price"));
-        productService.add(new Product(0, name, price));
-        response.sendRedirect("/suppliers");
+        double price = Double.parseDouble(request.getParameter("price"));
+        String url = request.getParameter("imageurl");
+        String description = request.getParameter("description");
+        productService.update(new Product(id, name, price, url, description));
+        response.sendRedirect("/suppliers?idShop=" + idShop);
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
         String name = request.getParameter("name");
-        double price= Double.parseDouble(request.getParameter("price"));
-        productService.add(new Product(0, name, price));
-        response.sendRedirect("/home");
+        double price = Double.parseDouble(request.getParameter("price"));
+        String imageurl = request.getParameter("imageurl");
+        String description = request.getParameter("description");
+        productService.add(new Product(0, name, price, imageurl, description));
+        response.sendRedirect("/suppliers?idShop=" + idShop);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
         int id = Integer.parseInt(request.getParameter("id"));
         productService.delete(id);
-        response.sendRedirect("/home");
+        response.sendRedirect("/suppliers?idShop=1" + idShop);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,7 +95,7 @@ public class ProductServlet extends HttpServlet {
                 showCreateForm(request, response);
                 break;
             case "editForm":
-                editForm(request,response);
+                editForm(request, response);
                 break;
             default:
                 showList(request, response);
@@ -121,16 +129,19 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Product product = new Product();
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
+        List<Product> products = productService.findAllByShop(idShop);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/edit.jsp");
         int id = Integer.parseInt(request.getParameter("id"));
-        product = productService.findById(id);
+        Product product = productService.findById(id);
         request.setAttribute("EditProduct", product);
+        request.setAttribute("products", products);
+        request.setAttribute("idShop", idShop);
         requestDispatcher.forward(request, response);
     }
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("productss/create.jsp").forward(request, response);
+        request.getRequestDispatcher("product/create.jsp").forward(request, response);
     }
 
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

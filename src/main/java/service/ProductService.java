@@ -59,9 +59,11 @@ public class ProductService implements GeneralService<Product> {
     @Override
     public boolean add(Product product) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into product(name, price) values (?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into product(name, price,imageurl,description) values (?,?,?,?)");
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getImageurl());
+            preparedStatement.setString(4, product.getDescription());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -72,9 +74,12 @@ public class ProductService implements GeneralService<Product> {
     @Override
     public boolean update(Product product) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET name=?, price=? WHERE id=?");
-            preparedStatement.setString(1, product.getName());
-            preparedStatement.setDouble(2, product.getPrice());
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE product SET name=?, price=?,imageurl=?,description=? WHERE id=?");
+            preparedStatement.setInt(1, product.getId());
+            preparedStatement.setString(2, product.getName());
+            preparedStatement.setDouble(3, product.getPrice());
+            preparedStatement.setString(4, product.getImageurl());
+            preparedStatement.setString(5, product.getDescription());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

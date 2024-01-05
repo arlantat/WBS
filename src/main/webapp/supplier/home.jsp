@@ -8,6 +8,20 @@
     <link href="../css/tiny-slider.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <title>Sản phẩm</title>
+    <style>
+        h5 {
+            position: relative;
+            font-size: 14px;
+            color: #FFF;
+            top: 9px;
+        }
+
+        .delete-btn{
+            width: 10px;
+            height: 10px;
+            background: #ccc;
+        }
+    </style>
 </head>
 <body>
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
@@ -23,11 +37,10 @@
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/suppliers">Home</a>
+                    <a class="nav-link" href="/suppliers?idShop=${idShop}">Home</a>
                 </li>
-                <li><a class="nav-link" href="shop.html">Edit shop</a></li>
-                <li><a class="nav-link" href="about.html">Add product</a></li>
-                <li><a class="nav-link" href="services.html">Product manage</a></li>
+                <li><a class="nav-link" href="/suppliers?idShop=">Edit shop</a></li>
+                <li><a class="nav-link" href="product/create.jsp">Add product</a></li>
                 </li>
             </ul>
 
@@ -62,36 +75,26 @@
 
 
 <div class="untree_co-section product-section before-footer-section">
-    <form action="/products" method="post" class="text-center">
-        <input type="hidden" name="action" value="pay">
-        <div class="container">
-            <div class="row">
-                <!-- Start Column 1 -->
-                <c:forEach items="${products}" var="product" varStatus="loop">
-                    <div class="col-12 col-md-4 col-lg-3 mb-5">
-                        <div class="product-item">
-                            <img src="${product.imageurl}" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">${product.name}</h3>
-                            <strong class="product-price">$${product.price}</strong>
-                            <p class="product-desc">${product.description}</p>
-                            <span class="icon-cross">
-                                <a href="/products?action=editForm&id=${product.id}">
-                                    <img src="images/cross.svg" class="img-fluid">
-                                </a>
-                            </span>
-                            <input type="hidden" name="id${loop.index + 1}" value="${product.id}">
-                            <input type="hidden" name="name${loop.index + 1}" value="${product.name}">
-                            <input type="hidden" name="price${loop.index + 1}" value="${product.price}">
-                        </div>
+    <div class="container">
+        <div class="row">
+            <!-- Start Column 1 -->
+            <c:forEach items="${products}" var="product" varStatus="loop">
+                <div class="col-12 col-md-4 col-lg-3 mb-5">
+                    <div class="product-item">
+                        <img src="${product.imageurl}" class="img-fluid product-thumbnail">
+                        <h3 class="product-title">${product.name}</h3>
+                        <strong class="product-price">$${product.price}</strong>
+                        <p class="product-desc">${product.description}</p>
+                        <span class="icon-cross">
+                            <a href="/products?action=editForm&id=${product.id}&idShop=${idShop}">
+                                <h5>EDIT</h5>
+                            </a>
+                        </span>
                     </div>
-                </c:forEach>
-                <!-- End Column 1 -->
-                <input type="hidden" name="nameShop" value="${nameShop}">
-                <input type="hidden" name="idShop" value="${idShop}">
-                <input type="hidden" name="idAccount" value="${idAccount}">
-            </div>
+                </div>
+            </c:forEach>
         </div>
-    </form>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
