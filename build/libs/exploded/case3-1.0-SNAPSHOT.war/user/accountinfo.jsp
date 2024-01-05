@@ -8,6 +8,9 @@
     <link href="../css/style.css" rel="stylesheet">
     <title>Tài khoản</title>
     <style>
+        .card {
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -22,18 +25,11 @@
 
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                <li class="nav-item ">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="active"><a class="nav-link" href="shop.html">Shop</a></li>
-                <li><a class="nav-link" href="about.html">About us</a></li>
-                <li><a class="nav-link" href="services.html">Services</a></li>
-                <li><a class="nav-link" href="blog.html">Blog</a></li>
-                <li><a class="nav-link" href="contact.html">Contact us</a></li>
+
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                <li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
+                <li><a class="nav-link" href="/accounts?act=profilePage&idAccount=${idAccount}"><img src="images/user.svg"></a></li>
                 <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
             </ul>
         </div>
@@ -59,19 +55,35 @@
 
 <div class="untree_co-section product-section before-footer-section">
     <div class="container mt-5">
-        <h1>Thông tin tài khoản</h1>
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Chào cháu ${username} nha</h5>
-                        <a href="/accounts/changePassword" class="btn btn-primary mb-2" data-toggle="modal" data-target="#changePasswordModal">Đổi mật khẩu</a>
-    <%--                    <a href="another_page.html" class="btn btn-secondary"></a>--%>
+                        <h3>Đổi mật khẩu</h3>
+                        <form class="container mt-4" action="/change_password" method="post">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password:</label>
+                                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password:</label>
+                                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Confirm New Password:</label>
+                                <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </form>
                     </div>
                     <a href="/orders?action=showHistory&idAccount=${idAccount}" class="btn btn-secondary">Lịch sử mua hàng</a>
                 </div>
                 <p class="msg">${msg}</p>
             </div>
+
         </div>
     </div>
 </div>

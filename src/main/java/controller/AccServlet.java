@@ -82,6 +82,9 @@ public class AccServlet extends HttpServlet {
             act = "";
         }
         switch (act) {
+            case "profilePage":
+                profilePage(request, response);
+                break;
             case "editForm":
                 editForm(request, response);
                 break;
@@ -97,6 +100,12 @@ public class AccServlet extends HttpServlet {
         }
     }
 
+    private void profilePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
+        request.setAttribute("idAccount", idAccount);
+        request.setAttribute("username", accService.findById(idAccount).getUsername());
+        request.getRequestDispatcher("user/accountinfo.jsp").forward(request, response);
+    }
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Acc acc = new Acc();
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("acc/edit.jsp");

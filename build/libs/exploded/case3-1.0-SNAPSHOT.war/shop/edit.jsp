@@ -24,17 +24,11 @@
 
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-                <li class=" active">
-                    <a class="nav-link" href="/shops">Home</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="/shops?action=edit">Edit shop</a></li>
-                <li><a class="nav-link" href="/shops?action=create">Create new shop</a></li>
-                <li><a class="nav-link" href="/products?action=create">Add new product</a></li>
-                <li><a class="nav-link" href="/products?action=edit">Change product information</a></li>
+
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                <li><a class="nav-link" href="#"><img src="images/user.svg"></a></li>
+                <li><a class="nav-link" href="/accounts?act=profilePage&idAccount=${idAccount}"><img src="images/user.svg"></a></li>
                 <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
             </ul>
         </div>
