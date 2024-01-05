@@ -15,6 +15,4 @@ public interface GeneralService<T> {
     public boolean delete(int id) throws SQLException;
 
     public T findById(int id);
-
-    public List<T> findByName(String name);
 }

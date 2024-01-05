@@ -78,6 +78,7 @@ public class OrderService implements GeneralService<Order> {
     public boolean cancel(int idOrder) throws SQLException {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("update `order` set status = -1 where id = ?");
+            System.out.println(preparedStatement);
             preparedStatement.setInt(1, idOrder);
             if (preparedStatement.executeUpdate() > 0) {
                 return true;
@@ -108,10 +109,6 @@ public class OrderService implements GeneralService<Order> {
         return order;
     }
 
-    @Override
-    public List<Order> findByName(String name) {
-        return null;
-    }
 
     public boolean add(int idShop, int idAccount, double totalPrice, List<CartItem> cart) throws SQLException {
         connection.setAutoCommit(false);
@@ -120,6 +117,7 @@ public class OrderService implements GeneralService<Order> {
             statement.setDouble(1, totalPrice);
             if (statement.executeUpdate() == 0) {
                 connection.rollback();
+                connection.setAutoCommit(true);
                 return false;
             }
             statement = connection.prepareStatement("select last_insert_id()");
@@ -135,6 +133,7 @@ public class OrderService implements GeneralService<Order> {
                 statement.setInt(3, idOrder);
                 if (statement.executeUpdate() == 0) {
                     connection.rollback();
+                    connection.setAutoCommit(true);
                     return false;
                 }
             }
@@ -144,6 +143,7 @@ public class OrderService implements GeneralService<Order> {
             statement.setInt(3, idShop);
             if (statement.executeUpdate() == 0) {
                 connection.rollback();
+                connection.setAutoCommit(true);
                 return false;
             }
             connection.commit();
@@ -151,6 +151,7 @@ public class OrderService implements GeneralService<Order> {
             connection.rollback();
             e.printStackTrace();
         }
+        connection.setAutoCommit(true);
         return true;
     }
 

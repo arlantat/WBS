@@ -114,8 +114,4 @@ public class ProductService implements GeneralService<Product> {
         return productzz;
     }
 
-    @Override
-    public List<Product> findByName(String name) {
-        return null;
-    }
 }

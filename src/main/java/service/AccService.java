@@ -92,8 +92,17 @@ public class AccService implements GeneralService<Acc> {
         return false;
     }
 
-    @Override
-    public List<Acc> findByName(String name) {
-        return null;
+    public int findByName(String username) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select id from account where username = ?");
+            preparedStatement.setString(1, username);
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+        }
+        return -1;
     }
 }

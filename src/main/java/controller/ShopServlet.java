@@ -109,7 +109,9 @@ public class ShopServlet extends HttpServlet {
 
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Shop> shopList = shopService.findAll();
-        request.setAttribute("danhsach", shopList);
+        request.setAttribute("shopList", shopList);
+        request.setAttribute("username", request.getAttribute("username"));
+        request.setAttribute("idAccount", request.getAttribute("idAccount"));
         request.getRequestDispatcher("shop/shopList.jsp").forward(request, response);
     }
 }

@@ -113,10 +113,9 @@ public class AccServlet extends HttpServlet {
     private void verify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(password);
         Acc acc = new Acc(username, password);
         request.setAttribute("username", username);
-        request.setAttribute("idAccount", "Sai, mời đăng nhập lại");
+        request.setAttribute("idAccount", accService.findByName(username));
         if (accService.verify(acc)) {
             request.getRequestDispatcher("/shops").forward(request, response);
         } else {

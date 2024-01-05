@@ -17,15 +17,13 @@ public class ShopService implements GeneralService<Shop> {
     public List<Shop> findAll() {
         List<Shop> shops = new ArrayList<>();
         try {
-            AccService accService = new AccService();
             PreparedStatement preparedStatement = connection.prepareStatement("select * from shop");
-            System.out.println(preparedStatement); //in ra câu truy vấn.
+            System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int idAcc = rs.getInt("idaccount");
+                int id = rs.getInt("id");
                 String name = rs.getString("name");
-                Acc aac = accService.findById(idAcc);
-                shops.add(new Shop(aac, name));
+                shops.add(new Shop(id, name));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -85,8 +83,4 @@ public class ShopService implements GeneralService<Shop> {
         return shop;
     }
 
-    @Override
-    public List<Shop> findByName(String name) {
-        return null;
-    }
 }
