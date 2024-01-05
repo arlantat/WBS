@@ -48,7 +48,6 @@ public class ProductService implements GeneralService<Product> {
                 String description = rs.getString("description");
                 Product product = new Product(id, name, price, imageurl, description);
                 productList.add(product);
-                System.out.println(product.toString());
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -114,4 +113,27 @@ public class ProductService implements GeneralService<Product> {
         return productzz;
     }
 
+    public List<Product> findAllByShopFiltered(int idShop, String productPattern) {
+        List<Product> productList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select p.id, p.name, p.price, p.imageurl, p.description " +
+                            "from product p join shopproduct sp on p.id = sp.idproduct where sp.idshop = ? and p.name like ?");
+            preparedStatement.setInt(1, idShop);
+            preparedStatement.setString(2, "%" + productPattern + "%");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                double price = rs.getDouble("price");
+                String imageurl = rs.getString("imageurl");
+                String description = rs.getString("description");
+                Product product = new Product(id, name, price, imageurl, description);
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return productList;
+    }
 }

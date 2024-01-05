@@ -156,7 +156,13 @@ public class AccServlet extends HttpServlet {
     }
 
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Acc> accs = accService.findAll();
+        List<Acc> accs;
+        if (request.getParameter("opt") != null) {
+            String usernamePattern = request.getParameter("username");
+            accs = accService.filter(usernamePattern);
+        } else {
+            accs = accService.findAll();
+        }
         request.setAttribute("accs", accs);
         request.getRequestDispatcher("admin/accounts.jsp").forward(request, response);
     }

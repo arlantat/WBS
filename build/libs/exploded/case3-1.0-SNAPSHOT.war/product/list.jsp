@@ -8,6 +8,21 @@
     <link href="../css/tiny-slider.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <title>Sản phẩm</title>
+    <style>
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            flex: 1;
+            margin-right: 5px; /* Adjust this value to create space between input and button */
+        }
+
+        .btn-primary {
+            flex-shrink: 0;
+        }
+    </style>
 </head>
 <body>
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
@@ -57,6 +72,17 @@
 
 
 <div class="untree_co-section product-section before-footer-section">
+    <div class="container mb-4">
+        <form action="/products" method="get" class="search-container">
+            <input type="hidden" name="act" value="showList">
+            <input type="hidden" name="opt" value="filter">
+            <input type="hidden" name="nameShop" value="${nameShop}">
+            <input type="hidden" name="idShop" value="${idShop}">
+            <input type="hidden" name="idAccount" value="${idAccount}">
+            <input type="text" id="productSearch" class="form-control" name="product" placeholder="Tìm theo tên sản phẩm">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
+    </div>
     <form action="/products" method="post" class="text-center">
         <input type="hidden" name="action" value="pay">
         <div class="container">

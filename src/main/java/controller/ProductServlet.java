@@ -134,10 +134,16 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Product> products;
         int idShop = Integer.parseInt(request.getParameter("idShop"));
         int idAccount = Integer.parseInt(request.getParameter("idAccount"));
         String nameShop = shopService.findById(idShop).getName();
-        List<Product> products = productService.findAllByShop(idShop);
+        if (request.getParameter("opt") != null) {
+            String productPattern = request.getParameter("product");
+            products = productService.findAllByShopFiltered(idShop, productPattern);
+        } else {
+            products = productService.findAllByShop(idShop);
+        }
         request.setAttribute("nameShop", nameShop);
         request.setAttribute("idShop", idShop);
         request.setAttribute("idAccount", idAccount);

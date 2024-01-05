@@ -28,6 +28,25 @@ public class AccService implements GeneralService<Acc> {
         return accList;
     }
 
+    public List<Acc> filter(String usernamePattern) {
+        List<Acc> accList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from account where username like ?");
+            preparedStatement.setString(1, "%" + usernamePattern + "%");
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                accList.add(new Acc(id, username, password));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return accList;
+    }
+
     @Override
     public boolean add(Acc acc) throws SQLException {
         try {
