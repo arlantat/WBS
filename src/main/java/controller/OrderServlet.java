@@ -1,9 +1,6 @@
 package controller;
 
-import model.Acc;
-import model.Order;
-import model.OrderDetail;
-import model.Shop;
+import model.*;
 import service.AccService;
 import service.OrderService;
 import service.ShopService;
@@ -17,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "OrderServlet", urlPatterns = "/orders")
 public class OrderServlet extends HttpServlet {
-    OrderServlet orderServlet = new OrderServlet();
     AccService accService = new AccService();
     OrderService orderService = new OrderService();
     ShopService shopService = new ShopService();
@@ -34,6 +31,20 @@ public class OrderServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "cancelOrder":
+                try {
+                    cancelOrder(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "completeOrder":
+                try {
+                    completeOrder(request, response);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
             case "create":
                 try {
                     create(request, response);
@@ -50,7 +61,7 @@ public class OrderServlet extends HttpServlet {
                 break;
             case "edit":
                 try {
-                    edit(request,response);
+                    edit(request, response);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -58,6 +69,46 @@ public class OrderServlet extends HttpServlet {
             default:
                 showList(request, response);
         }
+    }
+    private void cancelOrder(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        int idOrder = Integer.parseInt(request.getParameter("idOrder"));
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
+        if (orderService.cancel(idOrder)) {
+            request.setAttribute("msg", "Hủy đơn thành công");
+        } else {
+            request.setAttribute("msg", "Hủy đơn không thành công");
+        }
+        request.setAttribute("idAccount", idAccount);
+        request.setAttribute("username", accService.findById(idAccount).getUsername());
+        request.getRequestDispatcher("user/accountinfo.jsp").forward(request, response);
+    }
+    private void completeOrder(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
+        double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
+        int index = 1;
+        String nameCur;
+        double priceCur;
+        int idCur, quantityCur;
+        List<CartItem> cart = new ArrayList<>();
+        while (request.getParameter("id" + index) != null) {
+            quantityCur = Integer.parseInt(request.getParameter("quantity" + index));
+            idCur = Integer.parseInt(request.getParameter("id" + index));
+            nameCur = request.getParameter("name" + index);
+            priceCur = Double.parseDouble(request.getParameter("price" + index));
+            CartItem cartItem = new CartItem(idCur, nameCur, priceCur, quantityCur);
+            cart.add(cartItem);
+            index++;
+        }
+        request.setAttribute("idAccount", idAccount);
+        request.setAttribute("username", accService.findById(idAccount).getUsername());
+        System.out.println(accService.findById(idAccount).getUsername());
+        if (orderService.add(idShop, idAccount, totalPrice, cart)) {
+            request.setAttribute("msg", "Thành công, nhấn xem lịch sử mua hàng");
+        } else {
+            request.setAttribute("msg", "Có lỗi");
+        }
+        request.getRequestDispatcher("user/accountinfo.jsp").forward(request, response);
     }
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -97,6 +148,9 @@ public class OrderServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "showHistory":
+                showHistory(request, response);
+                break;
             case "createForm":
                 showCreateForm(request, response);
                 break;
@@ -107,6 +161,16 @@ public class OrderServlet extends HttpServlet {
                 showList(request, response);
         }
     }
+
+    private void showHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
+        List<PastOrder> pastOrders = orderService.ordersByAccount(idAccount);
+        request.setAttribute("pastOrders", pastOrders);
+        request.setAttribute("idAccount", idAccount);
+        request.setAttribute("username", accService.findById(idAccount).getUsername());
+        request.getRequestDispatcher("user/orderhistory.jsp").forward(request, response);
+    }
+
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Order order = new Order();
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("order/edit.jsp");

@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="../css/tiny-slider.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
-    <title>Title</title>
+    <title>Sản phẩm</title>
 </head>
 <body>
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
@@ -81,6 +81,9 @@
                     </div>
                 </c:forEach>
                 <!-- End Column 1 -->
+                <input type="hidden" name="nameShop" value="${nameShop}">
+                <input type="hidden" name="idShop" value="${idShop}">
+                <input type="hidden" name="idAccount" value="${idAccount}">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Proceed to Payment</button>

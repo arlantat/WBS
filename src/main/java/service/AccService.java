@@ -70,9 +70,9 @@ public class AccService implements GeneralService<Acc> {
             System.out.println(preparedStatement); //in ra câu truy vấn.
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String name = rs.getString("name");
+                String username = rs.getString("username");
                 String password = rs.getString("password"); // lấy ra classId từ bảng student trong db
-                acc = new Acc(name, password);
+                acc = new Acc(username, password);
             }
         } catch (SQLException e) {
         }
