@@ -4,6 +4,7 @@ import model.*;
 import service.AccService;
 import service.OrderService;
 import service.ShopService;
+import service.TotalService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -157,9 +158,18 @@ public class OrderServlet extends HttpServlet {
             case "editForm":
                 editForm(request, response);
                 break;
+            case "showTotal":
+                totalForm(request,response);
             default:
                 showList(request, response);
         }
+    }
+
+    private void totalForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        TotalService totalService = new TotalService();
+        List<Total> totalList = totalService.total();
+        request.setAttribute("danhsach", totalList);
+        request.getRequestDispatcher("admin/total.jsp").forward(request, response);
     }
 
     private void showHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -184,9 +194,11 @@ public class OrderServlet extends HttpServlet {
         request.getRequestDispatcher("order/create.jsp").forward(request, response);
     }
 
+
     private void showList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Order> orders = orderService.findAll();
         request.setAttribute("ds", orders);
         request.getRequestDispatcher("order/list.jsp").forward(request, response);
     }
+
 }

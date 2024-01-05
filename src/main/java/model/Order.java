@@ -1,7 +1,6 @@
 package model;
 
 
-
 import java.sql.Timestamp;
 
 
@@ -9,23 +8,36 @@ public class Order extends OrderDetail {
     private int id;
     private Acc idAcc;
     private OrderDetail idOrderDetail;
-    private Shop idShop;
+    private Shop shopzz;
     private Timestamp time;
     private boolean status;
+    private double total;
+    private String name;
 
-    public Order(int id, Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time,boolean status) {
+    public Order(Product productzz, int quantity, double total, int id, Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time, boolean status, double total1) {
+        super(productzz, quantity, total);
         this.id = id;
         this.idAcc = idAcc;
         this.idOrderDetail = idOrderDetail;
-        this.idShop = idShop;
+        this.shopzz = idShop;
+        this.time = time;
+        this.status = status;
+        this.total = total1;
+    }
+
+    public Order(int id, Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time, boolean status) {
+        this.id = id;
+        this.idAcc = idAcc;
+        this.idOrderDetail = idOrderDetail;
+        this.shopzz = idShop;
         this.time = time;
         this.status = status;
     }
 
-    public Order(Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time,boolean status) {
+    public Order(Acc idAcc, OrderDetail idOrderDetail, Shop idShop, Timestamp time, boolean status) {
         this.idAcc = idAcc;
         this.idOrderDetail = idOrderDetail;
-        this.idShop = idShop;
+        this.shopzz = idShop;
         this.time = time;
         this.status = status;
     }
@@ -37,6 +49,11 @@ public class Order extends OrderDetail {
     }
 
     public Order(int idAcc, int idOrderDetail, java.sql.Timestamp timestamp, boolean status) {
+    }
+
+    public Order(String name, double total) {
+        this.name = name;
+        this.total = total;
     }
 
     public int getId() {
@@ -63,12 +80,27 @@ public class Order extends OrderDetail {
         this.idOrderDetail = idOrderDetail;
     }
 
-    public Shop getIdShop() {
-        return idShop;
+
+    public void setIdAcc(Acc idAcc) {
+        this.idAcc = idAcc;
     }
 
-    public void setIdShop(Shop idShop) {
-        this.idShop = idShop;
+    public Shop getShopzz() {
+        return shopzz;
+    }
+
+    public void setShopzz(Shop shopzz) {
+        this.shopzz = shopzz;
+    }
+
+    @Override
+    public double getTotal() {
+        return total;
+    }
+
+    @Override
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public Timestamp getTime() {
@@ -93,7 +125,7 @@ public class Order extends OrderDetail {
                 "id=" + id +
                 ", idAcc=" + idAcc +
                 ", idOrderDetail=" + idOrderDetail +
-                ", idShop=" + idShop +
+                ", idShop=" + shopzz +
                 ", time=" + time +
                 ", status=" + status +
                 '}';

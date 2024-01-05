@@ -24,6 +24,9 @@ public class Shop {
     public Shop() {
     }
 
+    public Shop(double total) {
+    }
+
     public int getId() {
         return id;
     }

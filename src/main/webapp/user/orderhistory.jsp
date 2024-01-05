@@ -75,7 +75,7 @@
                             <td><h2 class="h5 text-black">${pastOrder.id}</h2></td>
                             <td>${pastOrder.nameShop}</td>
                             <td>${pastOrder.timestamp}</td>
-                            <td>$${pastOrder.total}</td>
+                            <td>$${pastOrder.totalService}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${pastOrder.status == 1}">
