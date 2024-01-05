@@ -25,6 +25,13 @@ public class AccServlet extends HttpServlet {
             act = "";
         }
         switch (act) {
+            case "changePassword":
+                try {
+                    changePassword(request, response);
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+                break;
             case "create":
                 try {
                     create(request, response);
@@ -51,6 +58,21 @@ public class AccServlet extends HttpServlet {
         }
     }
 
+    private void changePassword(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
+        String username = request.getParameter("username");
+        String currentPassword = request.getParameter("currentPassword");
+        String newPassword = request.getParameter("newPassword");
+        if (accService.changePassword(username, currentPassword, newPassword)) {
+            request.setAttribute("msg", "Đổi mật khẩu thành công");
+        } else {
+            request.setAttribute("msg", "Sai sai");
+        }
+        request.setAttribute("idAccount", idAccount);
+        request.setAttribute("username", username);
+        request.getRequestDispatcher("user/accountinfo.jsp").forward(request, response);
+    }
+
     private void edit(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 
         String username = request.getParameter("username");
@@ -58,7 +80,6 @@ public class AccServlet extends HttpServlet {
         accService.update(new Acc(username, password));
         response.sendRedirect("/Blogs");
     }
-
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         String username = request.getParameter("username");

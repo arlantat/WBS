@@ -18,7 +18,7 @@
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
     <div class="container">
-        <a class="navbar-brand" href="index.html">WBS</a>
+        <a class="navbar-brand" href="/shops?username=${username}&idAccount=${idAccount}">WBS</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -75,7 +75,7 @@
                             <td><h2 class="h5 text-black">${pastOrder.id}</h2></td>
                             <td>${pastOrder.nameShop}</td>
                             <td>${pastOrder.timestamp}</td>
-                            <td>$${pastOrder.total}</td>
+                            <td>$${pastOrder.totalService}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${pastOrder.status == 1}">

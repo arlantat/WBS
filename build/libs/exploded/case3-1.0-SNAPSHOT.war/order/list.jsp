@@ -12,7 +12,7 @@
 </head>
 <body>
 <c:forEach items="${ds}" var="orderzz">
-    <h1>${orderzz.idAcc.name},${orderzz.idOrderDetail.total},${orderzz.idShop.name},${orderzzr.timestamp},${orderzz.status}</h1>
+    <h1>${orderzz.idAcc.name},${orderzz.idOrderDetail.totalService},${orderzz.idShop.name},${orderzzr.timestamp},${orderzz.status}</h1>
 </c:forEach>
 </body>
 </html>

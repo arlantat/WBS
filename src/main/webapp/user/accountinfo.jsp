@@ -61,7 +61,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Chào cháu ${username} nha</h5>
                         <h3>Đổi mật khẩu</h3>
-                        <form class="container mt-4" action="/change_password" method="post">
+                        <form class="container mt-4" action="/accounts" method="post">
+                            <input type="hidden" name="act" value="changePassword">
+                            <input type="hidden" name="idAccount" value="${idAccount}">
+                            <input type="hidden" name="username" value="${username}">
                             <div class="form-group">
                                 <label for="currentPassword">Current Password:</label>
                                 <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
@@ -69,11 +72,6 @@
                             <div class="form-group">
                                 <label for="newPassword">New Password:</label>
                                 <input type="password" class="form-control" id="newPassword" name="newPassword" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="confirmNewPassword">Confirm New Password:</label>
-                                <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Change Password</button>
@@ -84,37 +82,6 @@
                 <p class="msg">${msg}</p>
             </div>
 
-        </div>
-    </div>
-</div>
-
-<!-- Change Password Modal -->
-<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="currentPassword">Current Password</label>
-                        <input type="password" class="form-control" id="currentPassword">
-                    </div>
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <input type="password" class="form-control" id="newPassword">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm New Password</label>
-                        <input type="password" class="form-control" id="confirmPassword">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </form>
-            </div>
         </div>
     </div>
 </div>

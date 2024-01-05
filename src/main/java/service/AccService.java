@@ -43,13 +43,18 @@ public class AccService implements GeneralService<Acc> {
     }
 
     @Override
-    public boolean update(Acc acc) throws SQLException {
+    public boolean update(Acc acc) {
+        return false;
+    }
+
+    public boolean changePassword(String username, String currentPassword, String newPassword) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE username = ?");
-            preparedStatement.setString(1, acc.getPassword());
-            preparedStatement.setString(2, acc.getUsername());
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE username = ? and password = ?");
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, currentPassword);
+            preparedStatement.setString(1, newPassword);
             System.out.println(preparedStatement);
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println(e);
         }
