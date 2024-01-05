@@ -61,7 +61,7 @@ public class ProductServlet extends HttpServlet {
         String name = request.getParameter("name");
         double price= Double.parseDouble(request.getParameter("price"));
         productService.add(new Product(0, name, price));
-        response.sendRedirect("/home");
+        response.sendRedirect("/suppliers");
     }
 
     private void create(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -122,7 +122,7 @@ public class ProductServlet extends HttpServlet {
 
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Product product = new Product();
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("blog/edit.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/edit.jsp");
         int id = Integer.parseInt(request.getParameter("id"));
         product = productService.findById(id);
         request.setAttribute("EditProduct", product);
