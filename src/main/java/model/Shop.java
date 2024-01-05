@@ -2,18 +2,18 @@ package model;
 
 public class Shop {
     private int id;
-    private String name;
     private Acc azz;
+    private String name;
 
-    public Shop(int id, String name, Acc azz) {
+    public Shop(int id, Acc azz , String name) {
         this.id = id;
-        this.name = name;
         this.azz = azz;
+        this.name = name;
     }
 
-    public Shop(String name, Acc azz) {
-        this.name = name;
+    public Shop( Acc azz, String name) {
         this.azz = azz;
+        this.name = name;
     }
 
     public Shop() {
@@ -51,4 +51,5 @@ public class Shop {
                 ", azz=" + azz +
                 '}';
     }
+
 }

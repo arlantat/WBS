@@ -51,7 +51,7 @@ public class Order extends OrderDetail {
         return idAcc;
     }
 
-    public void setIdAcc(Acc idAcc) {
+    public void setIdAcc() {
         this.idAcc = idAcc;
     }
 

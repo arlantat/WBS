@@ -36,7 +36,7 @@ public class ProductService implements GeneralService<Product> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "select p.id, p.name, p.price, p.imageurl, p.description " +
-                    "from product p join shopproduct sp on p.id = sp.idproduct where sp.idshop = ?");
+                            "from product p join shopproduct sp on p.id = sp.idproduct where sp.idshop = ?");
             preparedStatement.setInt(1, idShop);
             System.out.println(preparedStatement); //in ra câu truy vấn.
             ResultSet rs = preparedStatement.executeQuery();
@@ -71,6 +71,14 @@ public class ProductService implements GeneralService<Product> {
 
     @Override
     public boolean update(Product product) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET name=?, price=? WHERE id=?");
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

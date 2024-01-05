@@ -28,7 +28,7 @@ public class OrderService implements GeneralService<Order> {
                 int idOrderDetail = rs.getInt("idod");
                 Timestamp timestamp = rs.getTimestamp("timestamp");
                 boolean status = rs.getBoolean("status");
-                orderList.add(new Order(id,idAcc,idOrderDetail,timestamp,status));
+                orderList.add(new Order(id, idAcc, idOrderDetail, timestamp, status));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -56,7 +56,17 @@ public class OrderService implements GeneralService<Order> {
     }
 
     @Override
-    public boolean update(Order order) throws SQLException {
+    public boolean update( Order order) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE order SET idaccount=?, idod=?, idshop=?, status=? WHERE id=?");
+            preparedStatement.setInt(1, order.getIdAcc().getId());
+            preparedStatement.setInt(2, order.getIdOrderDetail().getId());
+            preparedStatement.setInt(3, order.getIdShop().getId());
+            preparedStatement.setBoolean(4, order.isStatus());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -90,7 +100,7 @@ public class OrderService implements GeneralService<Order> {
                 int idOrderDetail = rs.getInt("idod");
                 Timestamp timestamp = rs.getTimestamp("timestamp");
                 boolean status = rs.getBoolean("status");
-                order = new Order(idAcc, idOrderDetail, timestamp,status);
+                order = new Order(idAcc, idOrderDetail, timestamp, status);
             }
         } catch (SQLException e) {
             System.out.println(e);

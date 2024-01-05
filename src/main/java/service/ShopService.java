@@ -22,11 +22,10 @@ public class ShopService implements GeneralService<Shop> {
             System.out.println(preparedStatement); //in ra câu truy vấn.
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
                 int idAcc = rs.getInt("idaccount");
+                String name = rs.getString("name");
                 Acc aac = accService.findById(idAcc);
-                shops.add(new Shop(id, name, aac));
+                shops.add(new Shop(aac, name));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -49,6 +48,14 @@ public class ShopService implements GeneralService<Shop> {
 
     @Override
     public boolean update(Shop shop) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET idaccount=?, name=? WHERE id=?");
+            preparedStatement.setInt(1, shop.getAzz().getId());
+            preparedStatement.setString(2, shop.getName());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -67,10 +74,10 @@ public class ShopService implements GeneralService<Shop> {
             System.out.println(preparedStatement); //in ra câu truy vấn.
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String name = rs.getString("name");
                 int idAcc = rs.getInt("idaccount");
+                String name = rs.getString("name");
                 Acc acz = accService.findById(idAcc);
-                shop = (new Shop(id, name, acz));
+                shop = (new Shop(acz, name));
             }
         } catch (SQLException e) {
             System.out.println(e);

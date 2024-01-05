@@ -52,6 +52,7 @@ public class AccServlet extends HttpServlet {
     }
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         accService.update(new Acc(username, password));
@@ -75,16 +76,12 @@ public class AccServlet extends HttpServlet {
         accService.delete(id);
         response.sendRedirect("/home");
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String act = request.getParameter("act");
         if (act == null) {
             act = "";
         }
         switch (act) {
-            case "create":
-                showCreateForm(request, response);
-                break;
             case "editForm":
                 editForm(request, response);
                 break;
@@ -118,8 +115,10 @@ public class AccServlet extends HttpServlet {
         String password = request.getParameter("password");
         System.out.println(password);
         Acc acc = new Acc(username, password);
+        request.setAttribute("username", username);
+        request.setAttribute("idAccount", "Sai, mời đăng nhập lại");
         if (accService.verify(acc)) {
-            request.getRequestDispatcher("/shop").forward(request, response);
+            request.getRequestDispatcher("/shops").forward(request, response);
         } else {
             request.setAttribute("msg", "Sai, mời đăng nhập lại");
             request.getRequestDispatcher("auth/login.jsp").forward(request, response);
