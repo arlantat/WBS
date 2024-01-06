@@ -56,11 +56,10 @@ public class ShopServlet extends HttpServlet {
     }
 
     private void editShop(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        int idAcc = Integer.parseInt(request.getParameter("idaccount"));
-        Acc acc = accService.findById(idAcc);
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
         String name = request.getParameter("name");
-        shopService.update(new Shop(acc, name));
-        response.sendRedirect("/supplier");
+        shopService.update(new Shop(idShop, name));
+        response.sendRedirect("/suppliers?idShop=" + idShop);
     }
 
     private void createShop(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -68,7 +67,7 @@ public class ShopServlet extends HttpServlet {
         Acc acc = accService.findById(idAcc);
         String name = request.getParameter("name");
         shopService.add(new Shop(0, acc, name));
-        response.sendRedirect("/supplier");
+        response.sendRedirect("/suppliers");
     }
 
     private void deleteShop(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -87,7 +86,7 @@ public class ShopServlet extends HttpServlet {
             case "createForm":
                 showCreateForm(request, response);
                 break;
-            case "editForm":
+            case "editFormShop":
                 editFormShop(request, response);
                 break;
             default:
@@ -96,12 +95,12 @@ public class ShopServlet extends HttpServlet {
     }
 
     private void editFormShop(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
+        request.setAttribute("idShop", idShop);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("shop/edit.jsp");
-        int id = Integer.parseInt(request.getParameter("id"));
-        Shop shop = shopService.findById(id);
-        request.setAttribute("editShop", shop);
         requestDispatcher.forward(request, response);
     }
+
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("shop/create.jsp").forward(request, response);

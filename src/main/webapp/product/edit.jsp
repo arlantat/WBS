@@ -28,7 +28,7 @@
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/suppliers?idShop=${idShop}">Home</a>
+                    <a class="nav-link" href="/suppliers?idShop={idShop}">Home</a>
                 </li>
                 <li><a class="nav-link" href="shop.html">Edit shop</a></li>
                 <li><a class="nav-link" href="about.html">Add product</a></li>
@@ -74,6 +74,7 @@
                     <form method="post" action="/products">
                         <input type="hidden" name="action" value="edit">
                         <input type="hidden" name="idShop" value="${idShop}">
+                        <input type="hidden" name="id" value="${id}">
                         <h5>Name</h5>
                         <input class="form-control" type="text" name="name">
                         <h5>Price</h5>
@@ -81,7 +82,6 @@
                         <h5>Link</h5>
                         <select name="" id="">
                             <c:forEach items="${products}" var="pr">
-                                <input type="hidden" name="id" value="${pr.id}">
                                 <option value="${pr.id}">${pr.imageurl}</option>
                             </c:forEach>
                         </select>

@@ -16,10 +16,9 @@
             top: 9px;
         }
 
-        .delete-btn{
-            width: 10px;
-            height: 10px;
-            background: #ccc;
+        .delete_btn {
+            height: 20px;
+            width: 40px;
         }
     </style>
 </head>
@@ -27,7 +26,7 @@
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
     <div class="container">
-        <a class="navbar-brand" href="/products?idShop=1">WBS</a>
+        <a class="navbar-brand" href="/suppliers?idShop=${idShop}">WBS</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
                 aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,8 +38,8 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/suppliers?idShop=${idShop}">Home</a>
                 </li>
-                <li><a class="nav-link" href="/suppliers?idShop=">Edit shop</a></li>
-                <li><a class="nav-link" href="product/create.jsp">Add product</a></li>
+                <li><a class="nav-link" href="/shops?action=editFormShop&idShop=${idShop}">Edit shop</a></li>
+                <li><a class="nav-link" href="/products?action=showCreateForm&idShop=${idShop}">Add product</a></li>
                 </li>
             </ul>
 
@@ -90,6 +89,17 @@
                                 <h5>EDIT</h5>
                             </a>
                         </span>
+                        <form action="/products" method="post">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="idShop" value="${idShop}">
+                            <input type="hidden" name="id" value="${product.id}">
+                            <div class="delete_btn">
+                                <button type="submit">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </c:forEach>
