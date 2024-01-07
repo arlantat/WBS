@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import service.AccService;
 import service.ProductService;
 import service.ShopService;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class ProductServlet extends HttpServlet {
     ProductService productService = new ProductService();
     ShopService shopService = new ShopService();
+    AccService accService = new AccService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -59,12 +61,12 @@ public class ProductServlet extends HttpServlet {
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int idShop = Integer.parseInt(request.getParameter("idShop"));
-        int id = Integer.parseInt(request.getParameter("id"));
+        int oldId = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
         String url = request.getParameter("imageurl");
         String description = request.getParameter("description");
-        productService.update(new Product(id, name, price, url, description));
+        productService.update(new Product(oldId, name, price, url, description));
         response.sendRedirect("/suppliers?idShop=" + idShop);
     }
 
@@ -74,8 +76,13 @@ public class ProductServlet extends HttpServlet {
         double price = Double.parseDouble(request.getParameter("price"));
         String imageurl = request.getParameter("imageurl");
         String description = request.getParameter("description");
-        productService.addInShop(new Product(0, name, price,imageurl,description),idShop);
-        request.getRequestDispatcher("suppliers?idShop=" + idShop).forward(request, response);
+        productService.addInShop(new Product(0, name, price,imageurl,description), idShop);
+        String nameShop = shopService.findById(idShop).getName();
+        List<Product> products = productService.findAllByShop(idShop);
+        request.setAttribute("nameShop", nameShop);
+        request.setAttribute("idShop", idShop);
+        request.setAttribute("products", products);
+        request.getRequestDispatcher("supplier/home.jsp").forward(request, response);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
@@ -108,12 +115,14 @@ public class ProductServlet extends HttpServlet {
         double priceCur;
         int idCur, quantityCur;
         List<CartItem> cart = new ArrayList<>();
+        boolean notEmpty = false;
         while (request.getParameter("id" + index) != null) {
             quantityCur = Integer.parseInt(request.getParameter("quantity" + index));
             if (quantityCur == 0) {
                 index++;
                 continue;
             }
+            notEmpty = true;
             idCur = Integer.parseInt(request.getParameter("id" + index));
             nameCur = request.getParameter("name" + index);
             priceCur = Double.parseDouble(request.getParameter("price" + index));
@@ -121,11 +130,20 @@ public class ProductServlet extends HttpServlet {
             cart.add(cartItem);
             index++;
         }
-        request.setAttribute("cart", cart);
-        request.setAttribute("idShop", request.getParameter("idShop"));
-        request.setAttribute("idAccount", request.getParameter("idAccount"));
+        int idAccount = Integer.parseInt(request.getParameter("idAccount"));
+        int idShop = Integer.parseInt(request.getParameter("idShop"));
+        request.setAttribute("idShop", idShop);
+        request.setAttribute("idAccount", idAccount);
         request.setAttribute("nameShop", request.getParameter("nameShop"));
-        request.getRequestDispatcher("product/cart.jsp").forward(request, response);
+        if (notEmpty) {
+            request.setAttribute("cart", cart);
+            request.getRequestDispatcher("product/cart.jsp").forward(request, response);
+        } else {
+            request.setAttribute("username", accService.findById(idAccount).getUsername());
+            request.setAttribute("products", productService.findAllByShop(idShop));
+            request.setAttribute("msg", "Tăng số lượng sp đi cháu");
+            request.getRequestDispatcher("product/list.jsp").forward(request, response);
+        }
     }
 
     private void editForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -158,6 +176,15 @@ public class ProductServlet extends HttpServlet {
         request.setAttribute("nameShop", nameShop);
         request.setAttribute("idShop", idShop);
         request.setAttribute("products", products);
-        request.getRequestDispatcher("product/list.jsp").forward(request, response);
+        request.setAttribute("idAccount", request.getParameter("idAccount"));
+        String supplier = request.getParameter("supplier");
+        if (supplier == null) {
+            supplier = "";
+        }
+        if (supplier.equals("true")) {
+            request.getRequestDispatcher("supplier/home.jsp").forward(request, response);
+        } else {
+            request.getRequestDispatcher("product/list.jsp").forward(request, response);
+        }
     }
 }

@@ -31,6 +31,7 @@
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <li><a class="nav-link" href="/accounts?act=profilePage&idAccount=${idAccount}"><img src="images/user.svg"></a></li>
                 <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                <li><a class="nav-link" href="auth/login.jsp">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -77,15 +78,14 @@
                             <button type="submit" class="btn btn-primary">Change Password</button>
                         </form>
                     </div>
-                    <a href="/orders?action=showHistory&idAccount=${idAccount}" class="btn btn-secondary">Lịch sử mua hàng</a>
+                    <a href="/orders?action=showHistory&idAccount=${idAccount}" class="btn btn-secondary mb-1">Lịch sử mua hàng</a>
+                    <a href="/suppliers?action=checkSupplier&idAccount=${idAccount}" class="btn btn-secondary">Tôi là nhà cung cấp</a>
                 </div>
                 <p class="msg">${msg}</p>
             </div>
-
         </div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

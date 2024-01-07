@@ -1,6 +1,7 @@
 package controller;
 
 import model.Product;
+import service.AccService;
 import service.ProductService;
 import service.ShopService;
 
@@ -26,6 +27,9 @@ public class SupplierServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "checkSupplier":
+                checkSupplier(req, resp);
+                break;
             default:
                 showList(req, resp);
         }
@@ -41,5 +45,28 @@ public class SupplierServlet extends HttpServlet {
         req.setAttribute("idShop", idShop);
         req.setAttribute("products", products);
         req.getRequestDispatcher("supplier/home.jsp").forward(req, resp);
+    }
+
+    private void checkSupplier(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ShopService shopService = new ShopService();
+        ProductService productService = new ProductService();
+        AccService accService = new AccService();
+        int idAccount = Integer.parseInt(req.getParameter("idAccount"));
+        int idShop = shopService.verify(idAccount);
+        if (idShop == -1) {
+            req.setAttribute("msg", "Không phải nhà cung cấp");
+            req.setAttribute("username", accService.findById(idAccount).getUsername());
+            req.setAttribute("idAccount", idAccount);
+            req.getRequestDispatcher("user/accountinfo.jsp").forward(req, resp);
+        } else {
+            String nameShop = shopService.findById(idShop).getName();
+            List<Product> products = productService.findAllByShop(idShop);
+            req.setAttribute("nameShop", nameShop);
+            req.setAttribute("idShop", idShop);
+            req.setAttribute("products", products);
+            req.setAttribute("idAccount", idAccount);
+            req.getRequestDispatcher("supplier/home.jsp").forward(req, resp);
+        }
+
     }
 }

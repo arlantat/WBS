@@ -5,7 +5,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="../css/tiny-slider.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
-    <title>Title</title>
+    <title>Thêm sản phẩm</title>
 </head>
 <body>
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
@@ -23,6 +23,7 @@
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <li><a class="nav-link" href="/accounts?act=profilePage&idAccount=${idAccount}"><img src="images/user.svg"></a></li>
                 <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                <li><a class="nav-link" href="auth/login.jsp">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -50,15 +51,15 @@
     <form method="post" action="/products">
         <input type="hidden" name="action" value="create">
         <input type="hidden" name="idShop" value="${idShop}">
-        <h5>NAME</h5>
+        <h5>Name</h5>
         <input class="form-control" type="text" name="name">
-        <h5>PRICE</h5>
+        <h5>Price</h5>
         <input class="form-control" type="number" name="price">
-        <h5>LINK</h5>
+        <h5>Link</h5>
         <input class="form-control" type="text" name="imageurl">
-        <h5>DESCRIPTION</h5>
+        <h5>Description</h5>
         <input class="form-control" type="text" name="description">
-        <button class="btn btn-primary mt-2">CREATE</button>
+        <button class="btn btn-primary mt-2">Create</button>
     </form>
 </div>
 

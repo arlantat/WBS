@@ -83,8 +83,6 @@ public class ShopService implements GeneralService<Shop> {
         }
         return shop;
     }
-
-    @Override
     public Shop findByName(String name) {
         List<Shop> shopList = new ArrayList<>();
         for (Shop shop : shopList) {
@@ -93,5 +91,21 @@ public class ShopService implements GeneralService<Shop> {
             }
         }
         return null;
+    }
+
+    public int verify(int idAccount) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select id from shop where idaccount = ?");
+            preparedStatement.setInt(1, idAccount);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                return -1;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
     }
 }

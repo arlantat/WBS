@@ -2,8 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="../css/tiny-slider.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
@@ -45,6 +44,7 @@
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <li><a class="nav-link" href="/accounts?act=profilePage&idAccount=${idAccount}"><img src="images/user.svg"></a></li>
                 <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                <li><a class="nav-link" href="auth/login.jsp">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -60,6 +60,7 @@
                 <div class="intro-excerpt">
                     <h1>${nameShop}</h1>
                     <h2 class="sub-hero">Danh sách sản phẩm</h2>
+                    <p class="msg mt-5 fs-5">${msg}</p>
                 </div>
             </div>
             <div class="col-lg-7">
@@ -91,7 +92,7 @@
                 <c:forEach items="${products}" var="product" varStatus="loop">
                     <div class="col-12 col-md-4 col-lg-3 mb-5">
                         <div class="product-item">
-                            <img src="${product.imageurl}" class="img-fluid product-thumbnail">
+                            <img src="${product.imageurl}" class="img-fluid product-thumbnail" style="max-width: 200px; max-height: 150px;">
                             <h3 class="product-title">${product.name}</h3>
                             <strong class="product-price">$${product.price}</strong>
                             <p class="product-desc">${product.description}</p>
@@ -112,7 +113,7 @@
                 <input type="hidden" name="idAccount" value="${idAccount}">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        <button type="submit" class="btn btn-primary">Thanh toán</button>
     </form>
 </div>
 

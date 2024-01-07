@@ -719,3 +719,8 @@ textarea {
 .product-item .product-desc::-webkit-scrollbar {
     display: none;
 }
+
+.msg {
+    color: #3b5d50;
+    font-weight: bold;
+}

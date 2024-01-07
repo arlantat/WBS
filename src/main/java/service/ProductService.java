@@ -162,6 +162,8 @@ public class ProductService implements GeneralService<Product> {
             preparedStatement= connection.prepareStatement("insert into shopproduct(idproduct,idshop) values (?,?)");
             preparedStatement.setInt(1, idProduct);
             preparedStatement.setInt(2, idShop);
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             System.out.println(e);
