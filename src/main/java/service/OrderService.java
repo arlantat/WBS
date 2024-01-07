@@ -38,7 +38,6 @@ public class OrderService implements GeneralService<Order> {
 
     @Override
     public boolean add(Order order) throws SQLException {
-
         return false;
     }
 
@@ -65,7 +64,6 @@ public class OrderService implements GeneralService<Order> {
     public boolean cancel(int idOrder) throws SQLException {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("update `order` set status = -1 where id = ?");
-            System.out.println(preparedStatement);
             preparedStatement.setInt(1, idOrder);
             if (preparedStatement.executeUpdate() > 0) {
                 return true;

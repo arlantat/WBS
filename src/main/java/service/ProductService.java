@@ -58,10 +58,13 @@ public class ProductService implements GeneralService<Product> {
     @Override
     public boolean add(Product product) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("insert into product(name, price) values (?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into product(name, price,imageurl,description) values (?,?,?,?)");
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getImageurl());
+            preparedStatement.setString(4, product.getDescription());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -71,10 +74,14 @@ public class ProductService implements GeneralService<Product> {
     @Override
     public boolean update(Product product) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET name=?, price=? WHERE id=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE product SET name=?, price=?,imageurl=?,description=? WHERE id=?");
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getImageurl());
+            preparedStatement.setString(4, product.getDescription());
+            preparedStatement.setInt(5, product.getId());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -135,5 +142,44 @@ public class ProductService implements GeneralService<Product> {
             System.out.println(e);
         }
         return productList;
+    }
+
+    public boolean addInShop(Product product,int idShop) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into product(name, price,imageurl,description) values (?,?,?,?)");
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getImageurl());
+            preparedStatement.setString(4, product.getDescription());
+            preparedStatement.executeUpdate();
+            System.out.println(preparedStatement);
+            preparedStatement = connection.prepareStatement("select last_insert_id()");
+            ResultSet rs = preparedStatement.executeQuery();
+            int idProduct = -1;
+            if (rs.next()) {
+                idProduct = rs.getInt(1);
+            }
+            preparedStatement= connection.prepareStatement("insert into shopproduct(idproduct,idshop) values (?,?)");
+            preparedStatement.setInt(1, idProduct);
+            preparedStatement.setInt(2, idShop);
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean deleteProduct(int id,int idShop) throws SQLException {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from shopproduct where idshop = ? and idproduct =? ");
+            preparedStatement.setInt(1, idShop);
+            preparedStatement.setInt(2, id);
+            System.out.println(preparedStatement); //in ra câu truy vấn.
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

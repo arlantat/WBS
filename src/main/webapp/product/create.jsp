@@ -11,8 +11,6 @@
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
     <div class="container">
-        <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -49,24 +47,18 @@
 </div>
 <!-- End Hero Section -->
 <div class="container mt-5">
-    <form>
-        <div class="mb-3">
-            <label for="productName" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="productName" name="productName">
-        </div>
-        <div class="mb-3">
-            <label for="productPrice" class="form-label">Price</label>
-            <input type="text" class="form-control" id="productPrice" name="productPrice">
-        </div>
-        <div class="mb-3">
-            <label for="productImage" class="form-label">Image URL</label>
-            <input type="text" class="form-control" id="productImage" name="productImage">
-        </div>
-        <div class="mb-3">
-            <label for="productDescription" class="form-label">Description</label>
-            <textarea class="form-control" id="productDescription" name="productDescription" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+    <form method="post" action="/products">
+        <input type="hidden" name="action" value="create">
+        <input type="hidden" name="idShop" value="${idShop}">
+        <h5>NAME</h5>
+        <input class="form-control" type="text" name="name">
+        <h5>PRICE</h5>
+        <input class="form-control" type="number" name="price">
+        <h5>LINK</h5>
+        <input class="form-control" type="text" name="imageurl">
+        <h5>DESCRIPTION</h5>
+        <input class="form-control" type="text" name="description">
+        <button class="btn btn-primary mt-2">CREATE</button>
     </form>
 </div>
 

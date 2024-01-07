@@ -1,5 +1,3 @@
-<%@ page import="java.util.function.Supplier" %>
-<%@ page import="model.Shop" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -9,10 +7,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="../css/tiny-slider.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
-    <title>Sửa Sản phẩm</title>
+    <title>Sản phẩm</title>
     <style>
-        .product_edit {
-            width: 100%;
+        h5 {
+            position: relative;
+            font-size: 14px;
+            color: #FFF;
+            top: 9px;
+        }
+
+        .delete_btn {
+            height: 20px;
+            width: 40px;
         }
     </style>
 </head>
@@ -20,7 +26,7 @@
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
     <div class="container">
-        <a class="navbar-brand" href="/shops?username=${username}&idAccount=${idAccount}">WBS</a>
+        <a class="navbar-brand" href="/suppliers?idShop=${idShop}">WBS</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
                 aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +35,12 @@
 
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-
+                <li class="nav-item active">
+                    <a class="nav-link" href="/suppliers?idShop=${idShop}">Home</a>
+                </li>
+                <li><a class="nav-link" href="/shops?action=editFormShop&idShop=${idShop}">Edit shop</a></li>
+                <li><a class="nav-link" href="/products?action=showCreateForm&idShop=${idShop}">Add product</a></li>
+                </li>
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
@@ -50,7 +61,7 @@
             <div class="col-lg-5">
                 <div class="intro-excerpt">
                     <h1>${nameShop}</h1>
-                    <h2 class="sub-hero">Sửa sản phẩm</h2>
+                    <h2 class="sub-hero">Danh sách sản phẩm</h2>
                 </div>
             </div>
             <div class="col-lg-7">
@@ -65,28 +76,33 @@
 <div class="untree_co-section product-section before-footer-section">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="product_edit">
-                    <form method="post" action="/products">
-                        <input type="hidden" name="action" value="edit">
-                        <input type="hidden" name="idShop" value="${idShop}">
-                        <input type="hidden" name="id" value="${id}">
-                        <h5>Name</h5>
-                        <input class="form-control" type="text" name="name">
-                        <h5>Price</h5>
-                        <input class="form-control" type="number" name="price">
-                        <h5>Link</h5>
-                        <select name="" id="">
-                            <c:forEach items="${products}" var="pr">
-                                <option value="${pr.id}">${pr.imageurl}</option>
-                            </c:forEach>
-                        </select>
-                        <h5>Description</h5>
-                        <input class="form-control" type="text" name="description">
-                        <button class="btn btn-primary mt-2">Submit</button>
-                    </form>
+            <!-- Start Column 1 -->
+            <c:forEach items="${products}" var="product" varStatus="loop">
+                <div class="col-12 col-md-4 col-lg-3 mb-5">
+                    <div class="product-item">
+                        <img src="${product.imageurl}" class="img-fluid product-thumbnail">
+                        <h3 class="product-title">${product.name}</h3>
+                        <strong class="product-price">$${product.price}</strong>
+                        <p class="product-desc">${product.description}</p>
+                        <span class="icon-cross">
+                            <a href="/products?action=editForm&id=${product.id}&idShop=${idShop}">
+                                <h5>EDIT</h5>
+                            </a>
+                        </span>
+                        <form action="/products" method="post">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="idShop" value="${idShop}">
+                            <input type="hidden" name="id" value="${product.id}">
+                            <div class="delete_btn">
+                                <button type="submit">
+                                    Delete
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 </div>

@@ -47,10 +47,11 @@ public class ShopService implements GeneralService<Shop> {
     @Override
     public boolean update(Shop shop) throws SQLException {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE account SET idaccount=?, name=? WHERE id=?");
-            preparedStatement.setInt(1, shop.getAzz().getId());
-            preparedStatement.setString(2, shop.getName());
+            PreparedStatement preparedStatement = connection.prepareStatement("update shop set name=? where id=?");
+            preparedStatement.setString(1, shop.getName());
+            preparedStatement.setInt(2, shop.getId());
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,4 +84,14 @@ public class ShopService implements GeneralService<Shop> {
         return shop;
     }
 
+    @Override
+    public Shop findByName(String name) {
+        List<Shop> shopList = new ArrayList<>();
+        for (Shop shop : shopList) {
+            if (shop.getName().equals(name)) {
+                return shop;
+            }
+        }
+        return null;
+    }
 }
