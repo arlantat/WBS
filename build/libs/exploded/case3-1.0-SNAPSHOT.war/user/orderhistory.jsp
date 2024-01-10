@@ -33,6 +33,7 @@
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <li><a class="nav-link" href="/accounts?act=profilePage&idAccount=${idAccount}"><img src="images/user.svg"></a></li>
                 <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                <li><a class="nav-link" href="auth/login.jsp">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -45,7 +46,7 @@
             <div class="col-lg-5">
                 <div class="intro-excerpt">
                     <h1>${username}</h1>
-                    <h2 class="sub-hero">Lịch sử chơi đồ</h2>
+                    <h2 class="sub-hero">Lịch sử mua hàng</h2>
                 </div>
             </div>
             <div class="col-lg-7">
@@ -75,7 +76,7 @@
                             <td><h2 class="h5 text-black">${pastOrder.id}</h2></td>
                             <td>${pastOrder.nameShop}</td>
                             <td>${pastOrder.timestamp}</td>
-                            <td>$${pastOrder.totalService}</td>
+                            <td>$${pastOrder.total}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${pastOrder.status == 1}">
@@ -103,7 +104,6 @@
         </div>
     </div>
 </div>
-
 <p class="msg">${msg}</p>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
