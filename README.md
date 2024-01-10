@@ -1,4 +1,4 @@
-# WBS E-Commerce Hub
+# WBS E-tailer
 ![Static Badge](https://img.shields.io/badge/Java-brown)
 ![Static Badge](https://img.shields.io/badge/Gradle-brightgreen)
 ![Static Badge](https://img.shields.io/badge/Servlet-yellow)
