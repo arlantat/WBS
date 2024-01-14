@@ -6,4 +6,4 @@
 
 This is WBS - our E-Commerce Management Template. As users/customers, you are given a range of shops to choose from, and then given a range of products from the chosen shop and proceed to payment. As suppliers, you can login with your registered credentials to gain access to administration of your own shop. These, among other things you can customise!
 
-[![WBS](https://github.com/arlantat/WBS/assets/88363323/e554e65f-01b4-488a-9cc7-1bb63f2a55ac)](https://youtu.be/ZP-7Dz1ZjSM)
+[![WBS](https://github.com/arlantat/WBS/assets/88363323/974385e6-036e-4cd7-bc9a-87bdde3e2e4d)](https://youtu.be/ZP-7Dz1ZjSM)
